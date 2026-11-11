@@ -1,0 +1,40 @@
+---
+import LogoRow from "../LogoRow.astro";
+import {partnersContent} from "../../data/partners.ts";
+
+const { heading, logos } = partnersContent;
+
+// The second row shows the same logos starting from the middle, so the rows don't mirror each other.
+const half = Math.ceil(logos.length / 2);
+const secondRowLogos = [...logos.slice(half), ...logos.slice(0, half)];
+---
+
+<section
+        id="partners"
+        aria-labelledby="partners-heading"
+        class="bg-cream py-16 text-ink"
+>
+    <div class="mx-auto w-full max-w-9/12 flex flex-col items-center justify-center">
+        <h2
+                id="partners-heading"
+                class="partners-heading font-semibold leading-[1.4] tracking-tight"
+        >
+            {heading.lead}{" "}
+
+        </h2>
+        <h2 class="partners-heading font-semibold leading-[1.35] tracking-tight box-decoration-clone bg-brand-bright px-2 text-cream">
+        {heading.highlight}
+      </h2>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-3 sm:gap-4 lg:mt-16" role="group" aria-label="Company logos">
+        <LogoRow logos={logos} duration="70s" />
+        <LogoRow logos={secondRowLogos} reverse duration="80s" decorative />
+    </div>
+</section>
+
+<style>
+    .partners-heading {
+        font-size: clamp(2.25rem, 4.5vw, 4rem);
+    }
+</style>

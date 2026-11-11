@@ -1,0 +1,54 @@
+---
+import { menuLinks } from "../data/navigation";
+import { footerContent } from "../data/footer";
+
+const { heading, text } = footerContent;
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-ink/90 pt-24 pb-8 text-cream lg:pb-10">
+    <div class="mx-auto w-full max-w-9/12">
+        <div class="flex flex-col items-center text-center">
+            <!-- Placeholder wordmark, same as the header. Replace with the logo asset when supplied. -->
+            <a
+                    href="#top"
+                    class="rounded-sm font-heading text-xl font-semibold tracking-tight focus-visible:outline-cream"
+            >
+                IGA Konnect
+            </a>
+
+            <h2 class="footer-heading mt-8 max-w-5xl font-bold leading-none tracking-tight uppercase">
+                {heading}
+            </h2>
+
+            <p class="mt-6 max-w-xl text-base text-cream/80 sm:text-lg">{text}</p>
+        </div>
+
+        <div class="mt-16 flex flex-col gap-8 border-t border-cream/20 pt-8 lg:mt-20 lg:flex-row lg:items-start lg:justify-between">
+            <nav aria-label="Footer">
+                <ul class="flex flex-wrap gap-x-8 gap-y-3">
+                    {
+                        menuLinks.map((link) => (
+                                <li>
+                                    <a
+                                            href={link.href}
+                                            class="rounded-sm font-heading text-sm font-medium tracking-wide uppercase transition-colors duration-300 hover:text-brand-bright focus-visible:outline-cream"
+                                    >
+                                        {link.label}
+                                    </a>
+                                </li>
+                        ))
+                    }
+                </ul>
+            </nav>
+
+            <p class="text-sm text-cream/70">© {year} IGA Konnect. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer-heading {
+        font-size: clamp(2.25rem, 7vw, 6rem);
+    }
+</style>

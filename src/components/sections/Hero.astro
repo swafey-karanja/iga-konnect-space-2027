@@ -1,0 +1,74 @@
+---
+import HeroBackground from "../HeroBackground.astro";
+import { eventDetails } from "../../data/events.ts";
+
+// TODO: confirm the call-to-action label and destination.
+const registerLink = { label: "Register Now", href: "#registration" };
+---
+
+<section
+        id="hero"
+        aria-labelledby="hero-heading"
+        class="relative isolate flex min-h-svh w-full flex-col text-cream"
+>
+    <HeroBackground />
+
+    <div class="relative z-10 mx-auto flex w-full max-w-9/12 flex-1 flex-col justify-center pt-28 pb-8 sm:pt-32">
+        <div class="flex flex-wrap items-end justify-between bg-black/15 gap-8 backdrop-blur-sm p-10 rounded-xl">
+            <div>
+                <h1
+                        id="hero-heading"
+                        class="hero-title font-bold leading-none tracking-tight"
+                >
+                    <span class="block">WHERE</span>
+                    <span class="block">iGAMING</span>
+                    <span class="block">LEADERS</span>
+                    <span class="block text-brand-bright">CONVERGE.</span>
+                </h1>
+            </div>
+
+            <div class="flex flex-col">
+                <p class="ml-auto max-w-3xl text-base font-semibold text-cream/80 sm:text-4xl">
+                    The conversations, connections and ideas shaping the future of iGaming.
+                </p>
+                <a
+                        href={registerLink.href}
+                        class="mt-8 flex h-14 md:h-16 w-fit items-center gap-2.5 md:gap-4.5 rounded-full bg-orange/80 py-1 pr-2 pl-5 font-heading text-sm md:text-xl font-semibold md:font-semibold whitespace-nowrap text-ink transition-[filter] duration-500 hover:bg-orange focus-visible:outline-cream"
+                >
+                    {registerLink.label}
+                    <span class="grid size-10 place-items-center rounded-full bg-ink text-cream" aria-hidden="true">
+                        <svg
+                                class="size-5"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.75"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                        >
+                            <path d="M7 7h10v10" />
+                            <path d="M7 17 17 7" />
+                        </svg>
+                    </span>
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="relative z-10 mx-auto flex w-full max-w-9/12 items-end justify-between gap-6 pb-6 text-sm font-bold sm:pb-8 sm:text-xl">
+        <p class="backdrop-blur-sm bg-black/35 px-4 py-2 rounded-md ">
+            <span class="sr-only ">Dates: </span>{eventDetails.dates}
+        </p>
+        <p class="text-right backdrop-blur-sm bg-black/35 px-4 py-2 rounded-md">
+            <span class="sr-only">Venue: </span>{eventDetails.venue}
+        </p>
+    </div>
+</section>
+
+<style>
+    .hero-title {
+        font-size: clamp(2.75rem, min(13vw, 12svh), 8rem);
+    }
+</style>

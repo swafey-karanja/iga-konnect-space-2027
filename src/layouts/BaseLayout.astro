@@ -1,0 +1,41 @@
+---
+import { Font } from "astro:assets";
+import Header from "../components/Header.astro";
+import "../styles/global.css";
+import "lenis/dist/lenis.css";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+    title: string;
+    description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f4efe4" />
+    <Font
+            cssVariable="--font-poppins"
+            preload={[{ weight: 600, style: "normal", subset: "latin" }]}
+    />
+    <Font
+            cssVariable="--font-open-sans"
+            preload={[{ weight: 400, style: "normal", subset: "latin" }]}
+    />
+</head>
+<body id="top">
+<Header />
+<slot />
+<Footer />
+<script>
+    import "../scripts/smooth-scroll";
+</script>
+</body>
+</html>

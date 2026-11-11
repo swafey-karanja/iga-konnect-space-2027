@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* `static` always emits these variables, so component CSS can use var(--color-*). */
+@theme static {
+    --color-cream: #f4efe4;
+    --color-ink: #0b0b0b;
+    --color-orange: #e8590c;
+    --color-brand: #006239;
+    --color-brand-bright: #109f5d;
+
+    --radius-nav: 1.75rem;
+}
+
+/* `inline` lets Tailwind resolve the variables Astro generates for each font. */
+@theme inline {
+    --font-sans: var(--font-open-sans);
+    --font-heading: var(--font-poppins);
+}
+
+@layer base {
+    html {
+        color-scheme: light;
+    }
+
+    body {
+        @apply bg-cream font-sans text-ink antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-heading font-semibold leading-tight text-balance;
+    }
+
+    ::selection {
+        @apply bg-brand text-cream;
+    }
+
+    :focus-visible {
+        @apply outline-2 outline-offset-2 outline-brand;
+    }
+}

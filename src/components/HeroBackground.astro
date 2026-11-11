@@ -1,0 +1,87 @@
+---
+// Paths are served from /public. See "Assets" below for what to add.
+const posterSrc = "/images/hero-poster.jpg";
+
+const videoSources = {
+    desktop: [
+        { src: "/videos/background-vid.webm", type: "video/webm" },
+        { src: "/videos/background-vid.mp4", type: "video/mp4" },
+    ],
+    mobile: [{ src: "/videos/background-vid.mp4", type: "video/mp4" }],
+};
+---
+
+<div class="absolute inset-0 overflow-hidden bg-ink" aria-hidden="true">
+    <img
+            src={posterSrc}
+            alt=""
+            fetchpriority="high"
+            decoding="async"
+            class="absolute inset-0 size-full object-cover"
+    />
+    <video
+            class="absolute inset-0 size-full object-cover"
+            poster={posterSrc}
+            muted
+            loop
+            playsinline
+            preload="none"
+            disablepictureinpicture
+            tabindex="-1"
+            data-hero-video
+            data-sources={JSON.stringify(videoSources)}
+    >
+    </video>
+    <!-- Darkens the video so the headline stays readable -->
+    <div class="absolute inset-0 bg-ink/45"></div>
+</div>
+
+<script>
+    interface VideoSource {
+        src: string;
+        type: string;
+    }
+
+    interface VideoSources {
+        desktop: VideoSource[];
+        mobile: VideoSource[];
+    }
+
+    const video = document.querySelector<HTMLVideoElement>("[data-hero-video]");
+
+    if (video) {
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        const connection = (
+            navigator as Navigator & { connection?: { saveData?: boolean } }
+        ).connection;
+        const saveData = connection?.saveData === true;
+
+        // Reduced motion or Data Saver: keep the poster image and never download the video.
+        if (!prefersReducedMotion && !saveData) {
+            const sources: VideoSources = JSON.parse(video.dataset.sources ?? "{}");
+            const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+            for (const { src, type } of (isDesktop ? sources.desktop : sources.mobile) ?? []) {
+                const source = document.createElement("source");
+                source.src = src;
+                source.type = type;
+                video.appendChild(source);
+            }
+
+            video.muted = true;
+            video.load();
+
+            // Play only while the hero is on screen, to save battery and bandwidth.
+            const observer = new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            });
+            observer.observe(video);
+        }
+    }
+</script>

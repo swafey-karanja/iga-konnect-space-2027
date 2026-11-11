@@ -1,0 +1,177 @@
+---
+import { faqContent } from "../../data/faq";
+
+const { heading, openByDefault, items } = faqContent;
+---
+
+<section
+        id="faq"
+        aria-labelledby="faq-heading"
+        class="bg-ink py-16 text-cream"
+>
+    <div class="mx-auto w-full max-w-9/12">
+        <h2
+                id="faq-heading"
+                class="faq-heading text-center font-semibold leading-[1.4] tracking-tight"
+        >
+            <span class="block">{heading.lead}</span>
+            <span class="box-decoration-clone bg-brand-bright px-2 text-ink">
+        {heading.highlight}
+      </span>
+        </h2>
+
+        <ul class="mt-12 flex flex-col gap-3 lg:mt-16">
+            {
+                items.map((item, index) => {
+                    const isOpen = index === openByDefault;
+                    return (
+                            <li
+                                    class="faq-item rounded-2xl bg-cream/10"
+                                    data-faq-item
+                                    data-open={isOpen ? "true" : "false"}
+                            >
+                                <h3>
+                                    <button
+                                            type="button"
+                                            id={`faq-question-${index}`}
+                                            class="flex w-full items-center justify-between gap-6 rounded-2xl p-5 text-left focus-visible:outline-cream"
+                                            aria-expanded={isOpen ? "true" : "false"}
+                                            aria-controls={`faq-answer-${index}`}
+                                            data-faq-button
+                                    >
+                  <span class="font-heading text-base font-medium sm:text-xl">
+                    {item.question}
+                  </span>
+                                        <span class="faq-icon relative size-10 shrink-0 rounded-full sm:size-11" aria-hidden="true">
+                    <span class="faq-icon__bar faq-icon__bar--horizontal" />
+                    <span class="faq-icon__bar faq-icon__bar--vertical" />
+                  </span>
+                                    </button>
+                                </h3>
+
+                                <div
+                                        id={`faq-answer-${index}`}
+                                        class="faq-answer"
+                                        role="region"
+                                        aria-labelledby={`faq-question-${index}`}
+                                >
+                                    <div class="faq-answer__inner">
+                                        <p class="max-w-xl px-5 pb-6 text-sm leading-relaxed text-cream/70 sm:text-base">
+                                            {item.answer}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                    );
+                })
+            }
+        </ul>
+    </div>
+</section>
+
+<style>
+    .faq-heading {
+        font-size: clamp(2.25rem, 4.5vw, 4rem);
+    }
+
+    .faq-item {
+        --ease-faq: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Plus icon: closed is bright green, open is cream with a minus */
+    .faq-icon {
+        background-color: var(--color-brand-bright);
+        color: var(--color-ink);
+        transition:
+                background-color 300ms ease,
+                color 300ms ease;
+    }
+
+    .faq-item[data-open="true"] .faq-icon {
+        background-color: var(--color-cream);
+        color: var(--color-brand);
+    }
+
+    .faq-icon__bar {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: currentColor;
+        border-radius: 1px;
+        transition: transform 400ms var(--ease-faq);
+    }
+
+    .faq-icon__bar--horizontal {
+        width: 14px;
+        height: 2px;
+        transform: translate(-50%, -50%);
+    }
+
+    .faq-icon__bar--vertical {
+        width: 2px;
+        height: 14px;
+        transform: translate(-50%, -50%) rotate(0deg) scaleY(1);
+    }
+
+    .faq-item[data-open="true"] .faq-icon__bar--vertical {
+        transform: translate(-50%, -50%) rotate(90deg) scaleY(0);
+    }
+
+    /* The answer grows from 0fr to 1fr, so no height measuring in JS.
+       Closed answers are hidden from keyboard and screen readers once the animation ends. */
+    .faq-answer {
+        display: grid;
+        grid-template-rows: 0fr;
+        visibility: hidden;
+        opacity: 0;
+        transition:
+                grid-template-rows 450ms var(--ease-faq),
+                opacity 250ms ease,
+                visibility 0s linear 450ms;
+    }
+
+    .faq-item[data-open="true"] .faq-answer {
+        grid-template-rows: 1fr;
+        visibility: visible;
+        opacity: 1;
+        transition:
+                grid-template-rows 450ms var(--ease-faq),
+                opacity 400ms ease 100ms,
+                visibility 0s;
+    }
+
+    .faq-answer__inner {
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .faq-icon,
+        .faq-icon__bar,
+        .faq-answer,
+        .faq-item[data-open="true"] .faq-answer {
+            transition: none;
+        }
+    }
+</style>
+
+<script>
+    const items = document.querySelectorAll<HTMLElement>("[data-faq-item]");
+
+    const setOpen = (item: HTMLElement, open: boolean) => {
+        item.dataset.open = String(open);
+        item
+            .querySelector<HTMLButtonElement>("[data-faq-button]")
+            ?.setAttribute("aria-expanded", String(open));
+    };
+
+    items.forEach((item) => {
+        item
+            .querySelector<HTMLButtonElement>("[data-faq-button]")
+            ?.addEventListener("click", () => {
+                const willOpen = item.dataset.open !== "true";
+                // One question open at a time
+                items.forEach((other) => setOpen(other, other === item && willOpen));
+            });
+    });
+</script>

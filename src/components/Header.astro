@@ -1,0 +1,262 @@
+---
+import { menuLinks, socialLinks, ticketLink } from "../data/navigation";
+
+const socialsStartIndex = menuLinks.length + 1;
+---
+
+<header
+        class="nav fixed inset-x-0 top-0 z-50 px-2 pt-2 sm:px-4 sm:pt-4"
+        data-nav
+        data-open="false"
+>
+    <div
+            class="nav-shell mx-auto max-w-xl overflow-hidden rounded-nav border border-cream/10 text-cream backdrop-blur-sm"
+    >
+        <div class="flex h-18 items-center justify-between gap-2 py-2 pr-3 pl-4">
+            <button
+                    type="button"
+                    class="flex h-12 shrink-0 items-center gap-2 rounded-full pr-2 font-heading text-sm font-medium focus-visible:outline-cream"
+                    aria-expanded="false"
+                    aria-controls="site-menu"
+                    data-nav-toggle
+            >
+        <span class="nav-icon" aria-hidden="true">
+          <span class="nav-icon__line"></span>
+          <span class="nav-icon__line"></span>
+        </span>
+                <span class="grid max-[22rem]:sr-only">
+          <span class="nav-label nav-label--menu col-start-1 row-start-1" data-nav-label="menu">Menu</span>
+          <span class="nav-label nav-label--close col-start-1 row-start-1" data-nav-label="close" aria-hidden="true">Close</span>
+        </span>
+            </button>
+
+            <a
+                    href="#top"
+                    class="rounded-sm font-heading text-sm font-semibold tracking-tight whitespace-nowrap focus-visible:outline-cream sm:text-lg"
+            >
+                IGA Konnect
+            </a>
+
+            <a
+                    href={ticketLink.href}
+                    class="flex h-12 shrink-0 items-center gap-2.5 rounded-full bg-orange/80 py-1 pr-1 pl-4 font-heading text-sm font-semibold whitespace-nowrap text-ink transition-[filter] duration-300 hover:bg-orange focus-visible:outline-cream sm:pl-5"
+            >
+                {ticketLink.label}
+                <span class="grid size-10 place-items-center rounded-full bg-ink text-cream" aria-hidden="true">
+          <svg
+                  class="size-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+          >
+            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+            <path d="M13 5v2" />
+            <path d="M13 11v2" />
+            <path d="M13 17v2" />
+          </svg>
+        </span>
+            </a>
+        </div>
+
+        <div id="site-menu" class="nav-panel" data-nav-panel inert>
+            <div class="nav-panel__inner">
+                <div class="border-t border-cream/10 px-9 pt-5 pb-7">
+                    <p class="nav-reveal text-xs font-medium text-cream/60" style="--i: 0">
+                        Menu <span aria-hidden="true">•••</span>
+                    </p>
+                    <nav aria-label="Primary" class="mt-1.5">
+                        <ul>
+                            {menuLinks.map((link, index) => (
+                                    <li class="nav-reveal" style={`--i: ${index + 1}`}>
+                                        <a
+                                                href={link.href}
+                                                class="block rounded-sm py-0.5 font-heading text-2xl leading-tight font-medium tracking-tight transition-colors duration-300 hover:text-brand-bright focus-visible:outline-cream"
+                                        >
+                                            {link.label}
+                                        </a>
+                                    </li>
+                            ))}
+                        </ul>
+                    </nav>
+
+                    <p
+                            class="nav-reveal mt-7 text-xs font-medium text-cream/60"
+                            style={`--i: ${socialsStartIndex}`}
+                    >
+                        Socials <span aria-hidden="true">•••</span>
+                    </p>
+                    <ul class="mt-1.5" aria-label="Social media">
+                        {socialLinks.map((link, index) => (
+                                <li class="nav-reveal" style={`--i: ${socialsStartIndex + index + 1}`}>
+                                    <a
+                                            href={link.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="block rounded-sm py-0.5 font-heading text-2xl leading-tight font-medium tracking-tight transition-colors duration-300 hover:text-brand-bright focus-visible:outline-cream"
+                                    >
+                                        {link.label}
+                                    </a>
+                                </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+    .nav {
+        --ease-nav: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .nav-shell {
+        background-color: color-mix(in srgb, var(--color-ink) 70%, transparent);
+        transition: background-color 500ms var(--ease-nav);
+    }
+
+    .nav[data-open="true"] .nav-shell {
+        background-color: color-mix(in srgb, var(--color-ink) 70%, transparent);
+    }
+
+    /* Hamburger morphs into an X */
+    .nav-icon {
+        position: relative;
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .nav-icon__line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(50% - 1px);
+        height: 2px;
+        border-radius: 1px;
+        background-color: currentColor;
+        transition: transform 450ms var(--ease-nav);
+    }
+
+    .nav-icon__line:first-child {
+        transform: translateY(-3px);
+    }
+
+    .nav-icon__line:last-child {
+        transform: translateY(3px);
+    }
+
+    .nav[data-open="true"] .nav-icon__line:first-child {
+        transform: translateY(0) rotate(45deg);
+    }
+
+    .nav[data-open="true"] .nav-icon__line:last-child {
+        transform: translateY(0) rotate(-45deg);
+    }
+
+    /* "Menu" and "Close" crossfade in the same spot */
+    .nav-label {
+        transition:
+                opacity 300ms ease,
+                transform 400ms var(--ease-nav);
+    }
+
+    .nav-label--close {
+        opacity: 0;
+        transform: translateY(0.4rem);
+    }
+
+    .nav[data-open="true"] .nav-label--menu {
+        opacity: 0;
+        transform: translateY(-0.4rem);
+    }
+
+    .nav[data-open="true"] .nav-label--close {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Panel height animates between 0fr and 1fr, so no height measuring in JS */
+    .nav-panel {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 550ms var(--ease-nav);
+    }
+
+    .nav[data-open="true"] .nav-panel {
+        grid-template-rows: 1fr;
+    }
+
+    .nav-panel__inner {
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    /* Items fade out immediately on close and stagger in on open */
+    .nav-reveal {
+        opacity: 0;
+        transform: translateY(0.5rem);
+        transition:
+                opacity 250ms ease,
+                transform 350ms var(--ease-nav);
+    }
+
+    .nav[data-open="true"] .nav-reveal {
+        opacity: 1;
+        transform: none;
+        transition:
+                opacity 400ms ease calc(120ms + var(--i, 0) * 45ms),
+                transform 550ms var(--ease-nav) calc(120ms + var(--i, 0) * 45ms);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .nav-shell,
+        .nav-icon__line,
+        .nav-label,
+        .nav-panel,
+        .nav-reveal,
+        .nav[data-open="true"] .nav-reveal {
+            transition: none;
+        }
+    }
+</style>
+
+<script>
+    const header = document.querySelector<HTMLElement>("[data-nav]");
+    const toggle = header?.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+    const panel = header?.querySelector<HTMLElement>("[data-nav-panel]");
+    const menuLabel = header?.querySelector<HTMLElement>('[data-nav-label="menu"]');
+    const closeLabel = header?.querySelector<HTMLElement>('[data-nav-label="close"]');
+
+    if (header && toggle && panel && menuLabel && closeLabel) {
+        let isOpen = false;
+
+        const setOpen = (open: boolean) => {
+            isOpen = open;
+            header.dataset.open = String(open);
+            toggle.setAttribute("aria-expanded", String(open));
+            panel.inert = !open;
+            menuLabel.setAttribute("aria-hidden", String(open));
+            closeLabel.setAttribute("aria-hidden", String(!open));
+        };
+
+        toggle.addEventListener("click", () => setOpen(!isOpen));
+
+        panel.addEventListener("click", (event) => {
+            if ((event.target as Element).closest("a")) setOpen(false);
+        });
+
+        document.addEventListener("pointerdown", (event) => {
+            if (isOpen && !header.contains(event.target as Node)) setOpen(false);
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && isOpen) {
+                setOpen(false);
+                toggle.focus();
+            }
+        });
+    }
+</script>

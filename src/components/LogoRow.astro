@@ -1,0 +1,102 @@
+---
+import type { Logo } from "../data/partners.ts";
+
+interface Props {
+    logos: Logo[];
+    reverse?: boolean;
+    duration?: string;
+    // A repeat of logos already listed elsewhere: hidden from screen readers.
+    decorative?: boolean;
+}
+
+const { logos, reverse = false, duration = "60s", decorative = false } = Astro.props;
+
+// Three identical groups let the track loop seamlessly by moving one group's width.
+const groups = [0, 1, 2];
+---
+
+<div
+        class="logo-row"
+        data-reverse={reverse ? "true" : undefined}
+        style={`--duration: ${duration}`}
+        aria-hidden={decorative ? "true" : undefined}
+>
+    <div class="logo-row__track">
+        {
+            groups.map((group) => (
+                    <ul class="logo-row__group" aria-hidden={group > 0 ? "true" : undefined}>
+                        {logos.map((logo) => (
+                                <li class="logo-row__tile grid place-items-center rounded-xs bg-ink/5">
+                                    <img
+                                            src={logo.src}
+                                            alt={decorative || group > 0 ? "" : logo.name}
+                                            loading="lazy"
+                                            decoding="async"
+                                            class="h-auto max-h-2/5 w-auto max-w-3/5 object-contain"
+                                    />
+                                </li>
+                        ))}
+                    </ul>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .logo-row {
+        --gap: 0.75rem;
+        --scale: 0.7;
+        overflow: hidden;
+    }
+
+    @media (min-width: 640px) {
+        .logo-row {
+            --gap: 1rem;
+            --scale: 0.85;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .logo-row {
+            --scale: 1;
+        }
+    }
+
+    .logo-row__track {
+        display: flex;
+        width: max-content;
+        animation: logo-row-scroll var(--duration, 60s) linear infinite;
+        will-change: transform;
+    }
+
+    /* Running the same animation backwards sends the row the other way */
+    .logo-row[data-reverse="true"] .logo-row__track {
+        animation-direction: reverse;
+    }
+
+    .logo-row__group {
+        display: flex;
+        flex-shrink: 0;
+        gap: var(--gap);
+        padding-right: var(--gap);
+    }
+
+    /* 198 x 162 at full size */
+    .logo-row__tile {
+        flex-shrink: 0;
+        width: calc(12.375rem * var(--scale));
+        height: calc(10.125rem * var(--scale));
+    }
+
+    @keyframes logo-row-scroll {
+        to {
+            transform: translateX(-33.3333%);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .logo-row__track {
+            animation: none;
+        }
+    }
+</style>

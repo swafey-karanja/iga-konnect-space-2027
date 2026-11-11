@@ -1,0 +1,160 @@
+---
+import SocialIcon from "../SocialIcon.astro";
+import { speakersContent, socialLabels } from "../../data/speakers";
+import type { SocialNetwork } from "../../data/speakers";
+
+const { heading, intro, cta, speakers } = speakersContent;
+---
+
+<section
+        id="attendees"
+        aria-labelledby="speakers-heading"
+        class="relative z-20 bg-ink py-24 text-cream lg:py-32"
+>
+    <div class="mx-auto grid w-full max-w-9/12 gap-12 lg:grid-cols-[2fr_3fr] lg:gap-16">
+        <!-- Stays in place while the grid on the right scrolls past -->
+        <div class="lg:sticky lg:top-28 lg:self-start">
+            <h2
+                    id="speakers-heading"
+                    class="speakers-heading font-semibold leading-[1.4] tracking-tight"
+            >
+                {heading.lead}{" "}
+                <span class="box-decoration-clone bg-brand-bright px-2 text-ink">
+          {heading.highlight}
+        </span>
+            </h2>
+            <p class="mt-8 max-w-xl text-sm leading-relaxed text-cream/70 sm:text-base">
+                {intro}
+            </p>
+        <!--    <a-->
+        <!--            href={cta.href}-->
+        <!--            class="group mt-8 flex h-14 w-fit items-center gap-6 rounded-full border border-cream py-1 pr-1 pl-6 font-heading text-sm font-medium tracking-wide whitespace-nowrap text-cream uppercase transition-colors duration-300 hover:bg-cream/10 focus-visible:outline-cream"-->
+        <!--    >-->
+        <!--        {cta.label}-->
+        <!--        <span class="grid size-11 place-items-center rounded-full bg-cream text-brand" aria-hidden="true">-->
+        <!--  <svg-->
+        <!--          class="size-5 transition-transform duration-300 group-hover:translate-x-0.5"-->
+        <!--          viewBox="0 0 24 24"-->
+        <!--          fill="none"-->
+        <!--          stroke="currentColor"-->
+        <!--          stroke-width="1.75"-->
+        <!--          stroke-linecap="round"-->
+        <!--          stroke-linejoin="round"-->
+        <!--  >-->
+        <!--    <path d="M5 12h14" />-->
+        <!--    <path d="m12 5 7 7-7 7" />-->
+        <!--  </svg>-->
+        <!--</span>-->
+        <!--    </a>-->
+        </div>
+
+        <ul class="grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3">
+            {
+                speakers.map((speaker) => {
+                    const socials = Object.entries(speaker.socials) as [SocialNetwork, string][];
+                    return (
+                            <li>
+                                <article>
+                                    <div
+                                            class="speaker__photo relative aspect-square overflow-hidden rounded-sm bg-cream/10 focus-visible:outline-cream"
+                                            role="group"
+                                            aria-label={`${speaker.name}, ${speaker.company}`}
+                                            tabindex="0"
+                                    >
+                                        <img
+                                                src={speaker.image}
+                                                alt={speaker.name}
+                                                loading="lazy"
+                                                decoding="async"
+                                                class="size-full object-cover"
+                                        />
+
+                                        <div class="speaker__overlay absolute inset-0 flex flex-col justify-end gap-4 bg-ink/60 p-4">
+                                            <div>
+                                                <p class="font-heading text-base font-medium">{speaker.company}</p>
+                                                <p class="mt-1 text-sm text-cream/75">{speaker.role}</p>
+                                            </div>
+                                            {socials.length > 0 && (
+                                                    <ul class="flex gap-2">
+                                                        {socials.map(([network, href]) => (
+                                                                <li>
+                                                                    <a
+                                                                            href={href}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            aria-label={`${speaker.name} on ${socialLabels[network]}`}
+                                                                            class="grid size-8 place-items-center rounded-md bg-cream/15 text-cream transition-colors duration-300 hover:bg-cream hover:text-ink focus-visible:outline-cream"
+                                                                    >
+                                                                        <SocialIcon network={network} class="size-4" />
+                                                                    </a>
+                                                                </li>
+                                                        ))}
+                                                    </ul>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 flex items-start justify-between gap-3">
+                                        <div class="min-w-0">
+                                            <h3 class="font-heading text-base leading-snug font-medium break-words sm:text-xl">
+                                                {speaker.name}
+                                            </h3>
+                                            <p class="mt-1 text-sm text-cream/70">{speaker.company}</p>
+                                        </div>
+                                        {speaker.socials.linkedin && (
+                                                <a
+                                                        href={speaker.socials.linkedin}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        aria-label={`${speaker.name} on LinkedIn`}
+                                                        class="grid size-7 shrink-0 place-items-center rounded-md bg-cream/15 text-cream transition-colors duration-300 hover:bg-cream hover:text-ink focus-visible:outline-cream"
+                                                >
+                                                    <SocialIcon network="linkedin" class="size-4" />
+                                                </a>
+                                        )}
+                                    </div>
+                                </article>
+                            </li>
+                    );
+                })
+            }
+        </ul>
+    </div>
+</section>
+
+<style>
+    .speakers-heading {
+        font-size: clamp(2.25rem, 4.5vw, 4rem);
+    }
+
+    /* Hidden until the photo is hovered or focused. It ignores pointer events until then,
+       so a first tap on a phone reveals it instead of hitting an invisible link. */
+    .speaker__overlay {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 300ms ease;
+    }
+
+    .speaker__overlay > * {
+        transform: translateY(0.5rem);
+        transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .speaker__photo:hover .speaker__overlay,
+    .speaker__photo:focus-within .speaker__overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .speaker__photo:hover .speaker__overlay > *,
+    .speaker__photo:focus-within .speaker__overlay > * {
+        transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .speaker__overlay,
+        .speaker__overlay > * {
+            transition: none;
+        }
+    }
+</style>

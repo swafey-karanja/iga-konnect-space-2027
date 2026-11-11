@@ -1,0 +1,67 @@
+---
+import { audienceContent } from "../../data/audience";
+
+const { heading, cards } = audienceContent;
+---
+
+<section
+        id="audience"
+        aria-labelledby="audience-heading"
+        class="relative z-20 bg-cream px-0 py-24 text-ink lg:py-32"
+>
+    <div class="mx-auto grid w-full max-w-9/12 gap-12 lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] lg:gap-16">
+        <h2
+                id="audience-heading"
+                class="audience-heading font-semibold leading-[1.4] tracking-tight lg:sticky lg:top-28 lg:self-start"
+        >
+            {heading.lead}{" "}
+            <span class="box-decoration-clone bg-brand-bright px-2 text-cream">
+        {heading.highlight}
+      </span>
+        </h2>
+
+        <!--
+          Every card sticks at the same spot, so each later card scrolls up over the one before.
+          The gap below each card sets how much scrolling passes between arrivals.
+        -->
+        <ul class="flex w-full max-w-xl flex-col lg:justify-self-end">
+            {
+                cards.map((card, index) => (
+                        <li class:list={["sticky top-28", index < cards.length - 1 && "mb-[5vh]"]}>
+                            <article class="grid grid-cols-[auto_1fr] gap-6 rounded-sm bg-brand p-6 text-cream sm:gap-10 sm:p-8">
+                                <svg
+                                        class="h-auto w-12 shrink-0 sm:w-16"
+                                        viewBox="0 0 56 68"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                >
+                                    <polygon class="fill-brand" points="30,14 50,6 50,38 30,46" />
+                                    <polygon class="fill-brand" points="16,22 36,14 36,46 16,54" />
+                                    <polygon class="fill-brand" points="2,30 22,22 22,54 2,62" />
+                                </svg>
+                                <div>
+                                    <h3 class="text-xl font-medium tracking-tight sm:text-3xl">
+                                        {card.title}
+                                    </h3>
+                                    <p class="mt-4 text-sm leading-relaxed text-cream/85 sm:text-base">
+                                        {card.description}
+                                    </p>
+                                </div>
+                            </article>
+                        </li>
+                ))
+            }
+            <!-- Keeps the finished stack pinned for a moment before the page scrolls on -->
+            <!--<li aria-hidden="true" class="h-[15vh]"></li>-->
+        </ul>
+    </div>
+</section>
+
+<style>
+    .audience-heading {
+        font-size: clamp(2.25rem, 4.5vw, 4rem);
+    }
+</style>
