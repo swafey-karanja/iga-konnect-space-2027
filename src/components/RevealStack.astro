@@ -1,0 +1,21 @@
+<!--
+  Groups the section that scrolls away, the image section it reveals, and the section that
+  slides over the image. The image is pinned only inside this group, so it can never extend
+  past the end of the last section, whatever the zoom level or screen height.
+  The negative margin pulls the last section up so it slides over the image.
+-->
+<div class="reveal-stack">
+    <slot />
+</div>
+
+<style>
+    .reveal-stack > :global(:last-child) {
+        margin-top: -100lvh;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal-stack > :global(:last-child) {
+            margin-top: 0;
+        }
+    }
+</style>

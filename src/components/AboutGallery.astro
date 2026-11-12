@@ -1,21 +1,31 @@
+
 ---
 import { galleryImages } from "../data/about";
 
-// Three identical groups let the track loop seamlessly by moving one group's width.
+// Three identical groups allow the animation to loop seamlessly.
 const groups = [0, 1, 2];
 ---
 
 {
     galleryImages.length > 0 && (
-    <div class="about-gallery py-9" role="group" aria-label="Photo gallery">
+    <div
+            class="about-gallery bg-ink py-6"
+            role="group"
+            aria-label="Photo gallery"
+    >
         <div class="about-gallery__track">
             {groups.map((group) => (
-                    <ul class="about-gallery__group" aria-hidden={group > 0 ? "true" : undefined}>
+                    <ul
+                            class="about-gallery__group"
+                            aria-hidden={group > 0 ? "true" : undefined}
+                    >
                         {galleryImages.map((image, index) => (
                                 <li
                                         class:list={[
-                                            "shrink-0 overflow-hidden rounded-sm",
-                                            index % 2 === 0 ? "about-gallery__tile--tall" : "about-gallery__tile--short",
+                                            "about-gallery__tile shrink-0 overflow-hidden rounded-sm",
+                                            index % 2 === 0
+                                                ? "about-gallery__tile--tall"
+                                                : "about-gallery__tile--short",
                                         ]}
                                 >
                                     <img
@@ -36,23 +46,9 @@ const groups = [0, 1, 2];
 
 <style>
     .about-gallery {
-        --gap: 0.75rem;
-        --scale: 0.55;
+        --gap: clamp(0.35rem, 0.55vw, 0.85rem);
+
         overflow: hidden;
-    }
-
-    @media (min-width: 640px) {
-        .about-gallery {
-            --gap: 1rem;
-            --scale: 0.75;
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .about-gallery {
-            --gap: 1.125rem;
-            --scale: 1;
-        }
     }
 
     .about-gallery__track {
@@ -62,7 +58,6 @@ const groups = [0, 1, 2];
         will-change: transform;
     }
 
-    /* Tiles are centred vertically, so tall and short images share a midline */
     .about-gallery__group {
         display: flex;
         flex-shrink: 0;
@@ -71,15 +66,25 @@ const groups = [0, 1, 2];
         padding-right: var(--gap);
     }
 
-    /* Tall tile: 360 x 486 at full size. Short tile: 324 x 324 square. */
+    /* Images retain their natural aspect ratios and determine their own widths. */
+    .about-gallery__tile {
+        flex-shrink: 0;
+        overflow: hidden;
+    }
+
     .about-gallery__tile--tall {
-        width: calc(40.5rem * var(--scale));
-        height: calc(28.375rem * var(--scale));
+        height: clamp(15rem, 22.6vw, 25rem);
     }
 
     .about-gallery__tile--short {
-        width: calc(30.25rem * var(--scale));
-        height: calc(20.25rem * var(--scale));
+        height: clamp(12rem, 15vw, 20rem);
+    }
+
+    .about-gallery__tile img {
+        display: block;
+        width: auto;
+        height: 100%;
+        object-fit: cover;
     }
 
     @keyframes about-gallery-scroll {

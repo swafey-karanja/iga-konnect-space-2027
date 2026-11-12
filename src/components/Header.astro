@@ -39,25 +39,25 @@ const socialsStartIndex = menuLinks.length + 1;
 
             <a
                     href={ticketLink.href}
-                    class="flex h-12 shrink-0 items-center gap-2.5 rounded-full bg-orange/80 py-1 pr-1 pl-4 font-heading text-sm font-semibold whitespace-nowrap text-ink transition-[filter] duration-300 hover:bg-orange focus-visible:outline-cream sm:pl-5"
+                    class="flex h-10 md:h-12 shrink-0 items-center gap-2.5 rounded-full bg-orange/80 py-1 pr-1 pl-4 font-heading text-sm font-semibold whitespace-nowrap text-ink transition-[filter] duration-300 hover:bg-orange focus-visible:outline-cream sm:pl-5"
             >
                 {ticketLink.label}
-                <span class="grid size-10 place-items-center rounded-full bg-ink text-cream" aria-hidden="true">
-          <svg
-                  class="size-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.75"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-          >
-            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
-            <path d="M13 5v2" />
-            <path d="M13 11v2" />
-            <path d="M13 17v2" />
-          </svg>
-        </span>
+                <span class="grid size-8 md:size-10 place-items-center rounded-full bg-ink text-cream" aria-hidden="true">
+                  <svg
+                          class="size-5"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.75"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                  >
+                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+                    <path d="M13 5v2" />
+                    <path d="M13 11v2" />
+                    <path d="M13 17v2" />
+                  </svg>
+                </span>
             </a>
         </div>
 
@@ -73,7 +73,7 @@ const socialsStartIndex = menuLinks.length + 1;
                                     <li class="nav-reveal" style={`--i: ${index + 1}`}>
                                         <a
                                                 href={link.href}
-                                                class="block rounded-sm py-0.5 font-heading text-2xl leading-tight font-medium tracking-tight transition-colors duration-300 hover:text-brand-bright focus-visible:outline-cream"
+                                                class="block rounded-sm py-0.5 font-heading text-lg md:text-2xl leading-tight font-medium tracking-tight transition-colors duration-300 hover:text-brand-bright focus-visible:outline-cream"
                                         >
                                             {link.label}
                                         </a>
@@ -95,7 +95,7 @@ const socialsStartIndex = menuLinks.length + 1;
                                             href={link.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            class="block rounded-sm py-0.5 font-heading text-2xl leading-tight font-medium tracking-tight transition-colors duration-300 hover:text-brand-bright focus-visible:outline-cream"
+                                            class="block rounded-sm py-0.5 font-heading text-lg md:text-2xl leading-tight font-medium tracking-tight transition-colors duration-300 hover:text-brand-bright focus-visible:outline-cream"
                                     >
                                         {link.label}
                                     </a>

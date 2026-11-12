@@ -13,7 +13,7 @@ const registerLink = { label: "Register Now", href: "#registration" };
 >
     <HeroBackground />
 
-    <div class="relative z-10 mx-auto flex w-full max-w-9/12 flex-1 flex-col justify-center pt-28 pb-8 sm:pt-32">
+    <div class="relative z-10 mx-auto flex w-[92%] max-w-[1700px] gap-10 sm:w-[90%] flex-1 flex-col justify-center pt-28 pb-8 sm:pt-32">
         <div class="flex flex-wrap items-end justify-between bg-black/15 gap-8 backdrop-blur-sm p-10 rounded-xl">
             <div>
                 <h1
@@ -33,10 +33,10 @@ const registerLink = { label: "Register Now", href: "#registration" };
                 </p>
                 <a
                         href={registerLink.href}
-                        class="mt-8 flex h-14 md:h-16 w-fit items-center gap-2.5 md:gap-4.5 rounded-full bg-orange/80 py-1 pr-2 pl-5 font-heading text-sm md:text-xl font-semibold md:font-semibold whitespace-nowrap text-ink transition-[filter] duration-500 hover:bg-orange focus-visible:outline-cream"
+                        class="mt-8 flex h-12 md:h-16 w-fit items-center gap-2.5 md:gap-4.5 rounded-full bg-orange/80 py-1 pr-2 pl-5 font-heading text-sm md:text-xl font-semibold md:font-semibold whitespace-nowrap text-ink transition-[filter] duration-500 hover:bg-orange focus-visible:outline-cream"
                 >
                     {registerLink.label}
-                    <span class="grid size-10 place-items-center rounded-full bg-ink text-cream" aria-hidden="true">
+                    <span class="grid size-8 md:size-10 place-items-center rounded-full bg-ink text-cream" aria-hidden="true">
                         <svg
                                 class="size-5"
                                 viewBox="0 0 24 24"
@@ -57,7 +57,7 @@ const registerLink = { label: "Register Now", href: "#registration" };
         </div>
     </div>
 
-    <div class="relative z-10 mx-auto flex w-full max-w-9/12 items-end justify-between gap-6 pb-6 text-sm font-bold sm:pb-8 sm:text-xl">
+    <div class="relative z-10 mx-auto flex w-[92%] max-w-[1700px] sm:w-[90%] items-end justify-between gap-6 pb-6 text-xs font-bold sm:pb-8 sm:text-xl">
         <p class="backdrop-blur-sm bg-black/35 px-4 py-2 rounded-md ">
             <span class="sr-only ">Dates: </span>{eventDetails.dates}
         </p>
@@ -69,6 +69,6 @@ const registerLink = { label: "Register Now", href: "#registration" };
 
 <style>
     .hero-title {
-        font-size: clamp(2.75rem, min(13vw, 12svh), 8rem);
+        font-size: clamp(1.75rem, min(10vw, 10svh), 8rem);
     }
 </style>

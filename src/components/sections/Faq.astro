@@ -9,15 +9,15 @@ const { heading, openByDefault, items } = faqContent;
         aria-labelledby="faq-heading"
         class="bg-ink py-16 text-cream"
 >
-    <div class="mx-auto w-full max-w-9/12">
+    <div class="mx-auto w-[92%] max-w-[1700px] gap-10 sm:w-[90%]">
         <h2
                 id="faq-heading"
                 class="faq-heading text-center font-semibold leading-[1.4] tracking-tight"
         >
-            <span class="block">{heading.lead}</span>
-            <span class="box-decoration-clone bg-brand-bright px-2 text-ink">
-        {heading.highlight}
-      </span>
+            <span class="block">{heading.lead}{" "}<span class="box-decoration-clone bg-brand-bright px-2 text-ink">
+            {heading.highlight}
+          </span></span>
+
         </h2>
 
         <ul class="mt-12 flex flex-col gap-3 lg:mt-16">
@@ -39,13 +39,13 @@ const { heading, openByDefault, items } = faqContent;
                                             aria-controls={`faq-answer-${index}`}
                                             data-faq-button
                                     >
-                  <span class="font-heading text-base font-medium sm:text-xl">
-                    {item.question}
-                  </span>
+                                      <span class="font-heading text-base font-medium sm:text-xl">
+                                        {item.question}
+                                      </span>
                                         <span class="faq-icon relative size-10 shrink-0 rounded-full sm:size-11" aria-hidden="true">
-                    <span class="faq-icon__bar faq-icon__bar--horizontal" />
-                    <span class="faq-icon__bar faq-icon__bar--vertical" />
-                  </span>
+                                        <span class="faq-icon__bar faq-icon__bar--horizontal" />
+                                        <span class="faq-icon__bar faq-icon__bar--vertical" />
+                                      </span>
                                     </button>
                                 </h3>
 
@@ -71,7 +71,7 @@ const { heading, openByDefault, items } = faqContent;
 
 <style>
     .faq-heading {
-        font-size: clamp(2.25rem, 4.5vw, 4rem);
+        font-size: clamp(1.65rem, 4vw, 3rem);
     }
 
     .faq-item {

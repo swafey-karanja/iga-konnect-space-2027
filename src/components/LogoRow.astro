@@ -26,13 +26,13 @@ const groups = [0, 1, 2];
             groups.map((group) => (
                     <ul class="logo-row__group" aria-hidden={group > 0 ? "true" : undefined}>
                         {logos.map((logo) => (
-                                <li class="logo-row__tile grid place-items-center rounded-xs bg-ink/5">
+                                <li class="logo-row__tile grid place-items-center rounded-xs bg-white">
                                     <img
                                             src={logo.src}
                                             alt={decorative || group > 0 ? "" : logo.name}
                                             loading="lazy"
                                             decoding="async"
-                                            class="h-auto max-h-2/5 w-auto max-w-3/5 object-contain"
+                                            class="h-auto max-h-4/5 w-auto max-w-4/5 object-cover"
                                     />
                                 </li>
                         ))}
